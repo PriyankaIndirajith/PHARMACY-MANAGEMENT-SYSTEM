@@ -1,0 +1,92 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+class Main {
+ static class Medicine {
+ String name;
+ int quantity;
+ double price;
+ Medicine(String name, int quantity, double price) {
+ this.name = name;
+ this.quantity = quantity;
+ this.price = price;
+ }
+@Override
+ public String toString() {
+ return "Name: " + name + ", Quantity: " + quantity + ", Price: 
+₹" + price;
+ }
+ }
+public static void main(String[] args) {
+ ArrayList<Medicine> inventory = new ArrayList<>();
+ ArrayList<String> transactions = new ArrayList<>();
+ Scanner scanner = new Scanner(System.in);
+// Preloaded inventory for testing
+ inventory.add(new Medicine("Paracetamol", 50, 10.0));
+ inventory.add(new Medicine("Ibuprofen", 30, 15.0));
+ inventory.add(new Medicine("Amoxicillin", 20, 25.0));
+ do {
+System.out.println("\n1. Dispense Medication (Receive 
+Prescription)");
+ System.out.println("2. View Inventory");
+ System.out.println("3. View Transactions (Record Keeping)");
+ System.out.println("4. Exit");
+ System.out.print("Enter your choice: ");
+choice = scanner.nextInt();
+ scanner.nextLine(); // Consume newline character
+ switch (choice) {
+ case 1:
+ // Receive and verify prescription
+ System.out.print("Enter medicine name: ");
+ String name = scanner.nextLine();
+ System.out.print("Enter quantity: ");
+ int quantity = scanner.nextInt();
+ boolean found = false;
+ for (Medicine med : inventory) {
+if (med.name.equalsIgnoreCase(name)) {
+ound = true;
+ if (med.quantity >= quantity) {
+ // Dispense medication
+ med.quantity -= quantity;
+System.out.println("Medication dispensed successfully!");
+String transaction = "Dispensed " + quantity + " of " + 
+med.name;
+ transactions.add(transaction);
+ } else {
+ System.out.println("Insufficient stock. Request rejected.");
+}
+break;
+ }
+ }
+ if (!found) {
+System.out.println("Medicine not found. Request rejected.");
+ }
+ break;
+case 2:
+ // View inventory
+ System.out.println("\nMedicines in Inventory:");
+ if (inventory.isEmpty()) {
+System.out.println("No medicines available.");
+ } else {
+ inventory.forEach(System.out::println);
+ }
+ break;
+case 3:
+ // View transactions (record keeping)
+ System.out.println("\nTransactions:");
+ if (transactions.isEmpty()) {
+ System.out.println("No transactions recorded."); 
+ } else {
+ transactions.forEach(System.out::println);
+ } break;
+case 4:
+ // Exit the program
+ System.out.println("Exiting...");
+ break;
+ default:
+System.out.println("Invalid choice. Please try 
+again.");
+ }
+ } while (choice != 4);
+ scanner.close()
+}
+}
